@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aniversário de Casamento</title>
+</head>
+
+<body>
+    <div id="conteudo">
+        <h2>O que quer para essa noite?</h2>
+        <div style="margin: auto; display: flex; justify-content: center; width: 100%;">
+            <button class="btn" onclick="sim()">Sexo</button>
+            <button class="btn" id="btnJantar" onclick="desvia(this)" onmouseover="desvia(this)" disabled>Jantar</button>
+            <button class="btn" id="btnPresente" onclick="desvia(this)" onmouseover="desvia(this)" disabled>Presente</button>
+        </div>
+        <div id="gifContainer" style="display: none; margin-top: 20px;">
+            <iframe src="https://giphy.com/embed/YHYmMLkOmqoo" width="480" height="470" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+            <p><a href="https://giphy.com/gifs/YHYmMLkOmqoo">via GIPHY</a></p>
+        </div>
+    </div>
+
+    <button id="ajudaBtn" onclick="perguntaAjuda()">Ajuda</button>
+
+    <style>
+        #conteudo {
+            background: #C0C0C0;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            text-align: center;
+            font-family: sans-serif;
+        }
+
+        .btn {
+            background: black;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 80px;
+            border-radius: 5px;
+            margin: 0 5px; /* Adiciona um espaço entre os botões */
+        }
+
+        #ajudaBtn {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+
+    <script>
+        function sim() {
+            document.getElementById("gifContainer").style.display = "block"; // Mostra o GIF
+            alert("Evento marcado para 10/10/2024 às 23:30");
+
+            // Esconde o GIF após 3 segundos
+            setTimeout(function() {
+                document.getElementById("gifContainer").style.display = "none";
+            }, 3000);
+        }
+
+        function desvia(btn) {
+            // Apenas faz o desvio se os botões ainda estiverem bloqueados
+            if (btn.disabled) {
+                btn.style.position = 'absolute';
+                btn.style.bottom = geraPosicao(10, 90);
+                btn.style.left = geraPosicao(10, 90);
+                console.log('opa, desviei...');
+            } else {
+                // Se o botão não estiver desabilitado, redireciona para a URL correspondente em uma nova aba
+                if (btn.id === "btnJantar") {
+                    window.open("https://maps.app.goo.gl/P5SvHiJMNyo7UZsT7", "_blank"); // Altere para a URL do Jantar
+                } else if (btn.id === "btnPresente") {
+                    window.open("https://maps.app.goo.gl/mA8nvyq5gbifRUL57", "_blank"); // Altere para a URL do Presente
+                }
+            }
+        }
+
+        function geraPosicao(min, max) {
+            return (Math.random() * (max - min) + min) + "%";
+        }
+
+        function perguntaAjuda() {
+            const perguntas = [
+                {
+                    pergunta: "1/10-Qual foi o dia do nosso primeiro beijo? Escreva no formato: xx/xx/xxxx",
+                    resposta: "07/04/2011"
+                },
+                {
+                    pergunta: "2/10-Qual o nome da música que você me viu cantando pela primeira vez?",
+                    resposta: "Vem ficar comigo"
+                },
+                {
+                    pergunta: "3/10-Para qual país fomos em nossa primeira viagem internacional?",
+                    resposta: "Argentina"
+                },
+                {
+                    pergunta: "4/10-Quando fomos para a Argentina, você fez eu comprar um relógio, que marca que era?",
+                    resposta: "Diesel"
+                },
+                {
+                    pergunta: "5/10-Qual é o nome do Motel que fomos pela primeira vez?",
+                    resposta: "Izzi"
+                },
+                {
+                    pergunta: "6/10-Já fizemos algumas aventuras radicais, qual foi o primeiro?",
+                    resposta: "Rappel"
+                },
+                {
+                    pergunta: "7/10-No primeiro aniversário de casamento eu te dei um anel, qual era a marca?",
+                    resposta: "swarovski"
+                },
+                {
+                    pergunta: "8/10-Nosso primeiro carro foi um Ford, qual era o modelo?",
+                    resposta: "Fiesta"
+                },
+                {
+                    pergunta: "9/10-Qual é o número da nossa primeira casa morando juntos?",
+                    resposta: "51"
+                },
+                {
+                    pergunta: "10/10-Quantos dias de casados completamos esse ano?",
+                    resposta: "3653"
+                }
+            ];
+
+            let index = 0; // Para acompanhar a pergunta atual
+            while (index < perguntas.length) {
+                const resposta = prompt(perguntas[index].pergunta);
+                if (resposta && resposta.trim().toLowerCase() === perguntas[index].resposta.toLowerCase()) {
+                    alert("Resposta correta!");
+                    index++; // Avança para a próxima pergunta
+                } else {
+                    alert("Resposta incorreta. Tente novamente desde o início.");
+                    index = 0; // Reinicia o índice se a resposta estiver errada
+                }
+            }
+
+            // Se todas as respostas estiverem corretas, libera os botões
+            document.getElementById("btnJantar").disabled = false;
+            document.getElementById("btnPresente").disabled = false;
+            document.getElementById("btnJantar").style.position = 'static'; // Para parar o movimento
+            document.getElementById("btnPresente").style.position = 'static'; // Para parar o movimento
+            alert("Jantar e Presente desbloqueados!");
+        }
+    </script>
+</body>
+
+</html>
